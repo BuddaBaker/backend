@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Financial Recommendation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #F5F5F5;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #00594C;
+            text-align: center;
+        }
+
+        .user-form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #00594C;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .submit-button {
+            background-color: #00594C;
+            color: #FFF;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .submit-button:hover {
+            background-color: #008C73;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Get Financial Recommendation</h1>
+        <form action="/get_recommendation" method="POST" class="user-form">
+            <label for="user_id">User ID:</label>
+            <input type="text" id="user_id" name="user_id" required><br><br>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br><br>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+            
+            <label for="income">Income:</label>
+            <input type="number" id="income" name="income" required><br><br>
+            
+            <label for="company_401k">Do you have a company 401(k)?</label>
+            <select id="company_401k" name="company_401k" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select><br><br>
+            
+            <label for="company_match">Does your company provide a matching contribution to your 401(k)?</label>
+            <select id="company_match" name="company_match" required>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select><br><br>
+            
+            <label for="match_percent">Percentage of income that the company matches for 401(k):</label>
+            <input type="number" id="match_percent" name="match_percent" step="0.01" required><br><br>
+            
+            <label for="match_salary">Dollar amount of income that the company matches for 401(k):</label>
+            <input type="number" id="match_salary" name="match_salary" step="0.01" required><br><br>
+            
+            <label for="risk_level">Risk Level:</label>
+            <select id="risk_level" name="risk_level" required>
+                <option value="1">Conservative</option>
+                <option value="2">Moderate</option>
+                <option value="3">Aggressive</option>
+            </select><br><br>
+            
+            <label for="inputted_assets">Total Assets:</label>
+            <input type="number" id="inputted_assets" name="inputted_assets" required><br><br>
+            
+            <label for="checking_amt">Amount in Checking Account:</label>
+            <input type="number" id="checking_amt" name="checking_amt" step="0.01" required><br><br>
+            
+            <label for="saving_amt">Amount in Savings Account:</label>
+            <input type="number" id="saving_amt" name="saving_amt" step="0.01" required><br><br>
+            
+            <label for="IRA_amt">Amount in IRA Account:</label>
+            <input type="number" id="IRA_amt" name="IRA_amt" step="0.01" required><br><br>
+            
+            <label for="comp401k_amt">Amount in 401(k) Account:</label>
+            <input type="number" id="comp401k_amt" name="comp401k_amt" step="0.01" required><br><br>
+            
+            <label for="investment_amt">Amount in Investment Account:</label>
+            <input type="number" id="investment_amt" name="investment_amt" step="0.01" required><br><br>
+            
+            <label for="financial_goal">Financial Goal:</label>
+            <input type="text" id="financial_goal" name="financial_goal" required><br><br>
+            
+            <input type="submit" value="Get Financial Recommendation" class="submit-button">
+        </form>
+    </div>
+</body>
+</html>

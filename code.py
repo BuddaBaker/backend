@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 
-app = Flask(__name__)
+capp = Flask(__name__)
 
 # Define a dictionary to store recommendations for each goal and risk tolerance
 goal_recommendations = {
@@ -71,4 +71,4 @@ def get_recommendation():
     return render_template('form.html')
 
 if __name__ == '__main__':
-    app.run()
+    capp.run()
