@@ -33,6 +33,7 @@ goal_recommendations = {
     }
 }
 @app.route('/', methods=['GET', 'POST'])
+@app.route('/get_recommendation', methods=['GET', 'POST'])
 def get_recommendation():
     if request.method == 'POST':
         user_id = int(request.form['user_id'])
