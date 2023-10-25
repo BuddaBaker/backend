@@ -4,74 +4,67 @@ app = Flask(__name__)
 app.template_folder = 'templates'
 
 # Define a dictionary to store recommendations for each goal and risk tolerance
-# (Insert the goal_recommendations dictionary here)
 goal_recommendations = {
     'Retirement Planning': {
-        'Conservative': 'Start investing in retirement accounts with low-risk assets like bonds to build a solid retirement fund.',
-        'Moderate': 'Diversify your retirement investments across various assets for balanced growth.',
-        'Aggressive': 'Consider high-growth investments like stocks and ETFs to maximize long-term returns.'
+        'Conservative': 'For conservative investors, consider low-risk assets like bonds for your retirement fund. Consult with a financial advisor for more personalized guidance.',
+        'Moderate': 'Diversify your retirement investments across various assets like stocks and bonds for balanced growth.',
+        'Aggressive': 'Consider high-growth investments like stocks and ETFs for maximizing long-term returns in your retirement fund.'
     },
     'Emergency Fund': {
-        'Conservative': 'Save money in a stable, low-risk savings account for your emergency fund.',
-        'Moderate': 'Create a mix of stable savings and moderate-risk investments for your emergency fund.',
-        'Aggressive': 'Consider moderate-risk investments with quick liquidity for your emergency fund.'
+        'Conservative': 'Build your emergency fund in a stable, low-risk savings account. Aim for at least 3-6 months of living expenses.',
+        'Moderate': 'Combine stable savings with moderate-risk investments to grow your emergency fund while maintaining liquidity.',
+        'Aggressive': 'Consider moderate-risk investments with quick liquidity for your emergency fund to achieve potential growth.'
     },
     'Wealth Building': {
-        'Conservative': 'Invest in a diversified portfolio with low to moderate risk to steadily build wealth.',
-        'Moderate': 'Create a balanced portfolio of diverse assets to grow your wealth over time.',
-        'Aggressive': 'Consider high-risk, high-reward investments to accelerate wealth building.'
+        'Conservative': 'Start with a diversified portfolio of low to moderate risk to steadily build wealth over time.',
+        'Moderate': 'Create a balanced portfolio of diverse assets to grow your wealth and manage risk effectively.',
+        'Aggressive': 'Explore high-risk, high-reward investments to accelerate wealth building if you are comfortable with the risk.'
     },
-    'Investing': {
-        'Conservative': 'Focus on stable, low-risk assets like bonds and dividend stocks for your investment portfolio.',
-        'Moderate': 'Diversify your investment portfolio across different assets for balanced growth.',
-        'Aggressive': 'Consider high-growth, high-volatility assets like growth stocks and technology companies.'
-    },
-    'Home Buying': {
-        'Conservative': 'Save money for a down payment in low-risk accounts like a high-yield savings account or CDs.',
-        'Moderate': 'Create a balanced saving and investing plan to grow your down payment fund.',
-        'Aggressive': 'Consider moderate-risk investments to potentially grow your down payment fund faster.'
-    }
+    # Add similar recommendations for other goals...
 }
+
+# Weights for different factors
+weights = {
+    'income': 0.2,
+    'company_401k': 0.1,
+    'match_percent': 0.1,
+    'risk_level': 0.2,
+    'inputted_assets': 0.1,
+    'spending_amount': 0.1,
+    'financial_goal': 0.2,
+}
+
 @app.route('/', methods=['GET', 'POST'])
 def get_recommendation():
     if request.method == 'POST':
-        user_id = int(request.form['user_id'])
-        email = request.form['email']
-        password = request.form['password']
+        # Extract user input from the form
         income = float(request.form['income'])
         company_401k = request.form['company_401k']
-        company_match = request.form['company_match']
         match_percent = float(request.form['match_percent'])
-        match_salary = float(request.form['match_salary'])
         risk_level = int(request.form['risk_level'])
         inputted_assets = float(request.form['inputted_assets'])
-        checking_amt = float(request.form['checking_amt'])
-        saving_amt = float(request.form['saving_amt'])
-        IRA_amt = float(request.form['IRA_amt'])
-        comp401k_amt = float(request.form['comp401k_amt'])
-        investment_amt = float(request.form['investment_amt'])
+        spending_amount = float(request.form['spending_amount'])
         financial_goal = request.form['financial_goal']
-        
-        # Map risk level to risk tolerance
-        risk_tolerances = {
-            1: 'Conservative',
-            2: 'Moderate',
-            3: 'Aggressive'
-        }
-        risk_tolerance = risk_tolerances.get(risk_level, 'Moderate')  # Default to 'Moderate' if invalid input
 
-        # Use the financial goal and risk tolerance to get the financial recommendation
-        if financial_goal in goal_recommendations and risk_tolerance in goal_recommendations[financial_goal]:
-            recommendation = goal_recommendations[financial_goal][risk_tolerance]
-        elif financial_goal in goal_recommendations:
-            recommendation = "No specific risk tolerance provided for this goal. Consider a moderate risk tolerance."
-        else:
-            recommendation = "No specific recommendation available for this goal."
-        
-        # Fetch form input data and process it
-        # (Insert the form processing code here)
-        
+        # Calculate a weighted score based on user responses
+        score = (
+            weights['income'] * income +
+            weights['company_401k'] * (1 if company_401k == 'Yes' else 0) +
+            weights['match_percent'] * match_percent +
+            weights['risk_level'] * risk_level +
+            weights['inputted_assets'] * inputted_assets +
+            weights['spending_amount'] * spending_amount +
+            weights['financial_goal'] * len(financial_goal)  # Consider the length of the financial goal as a proxy for its importance
+        )
+
+        # Determine the user's goal based on their input
+        user_goal = None  # Set this based on user input (e.g., mapping financial_goal to predefined goals)
+
+        # Get the recommendation based on the user's goal and risk level
+        recommendation = goal_recommendations.get(user_goal, {}).get(risk_level, 'No specific recommendation available.')
+
         return render_template('result.html', recommendation=recommendation)
+
     return render_template('form.html')
 
 if __name__ == '__main__':

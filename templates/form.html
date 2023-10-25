@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Financial Recommendation</title>
+    <title>Financial Health Questionnaire</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-        }
+    font-family: Arial, sans-serif;
+    background-color: #003300; /* Very Dark Green background */
+}
 
         .container {
             max-width: 600px;
@@ -20,22 +18,19 @@
         }
 
         h1 {
-            color: #00594C;
+            color: #008000; /* Green title text */
             text-align: center;
-        }
-
-        .user-form {
-            margin-top: 20px;
         }
 
         label {
             display: block;
-            margin-bottom: 5px;
-            color: #00594C;
+            margin-top: 15px;
+            color: #008000; /* Green label text */
             font-weight: bold;
         }
 
-        input, select {
+        input[type="text"],
+        select {
             width: 100%;
             padding: 10px;
             margin-bottom: 10px;
@@ -43,85 +38,113 @@
             border-radius: 5px;
         }
 
+        .radio-group {
+            display: flex;
+        }
+
+        .radio-option {
+            margin-right: 20px;
+        }
+
+        .checkbox-group {
+            margin-top: 5px;
+        }
+
         .submit-button {
-            background-color: #00594C;
-            color: #FFF;
-            padding: 10px 20px;
+            background-color: #FFF; /* White background */
+            color: #FFD700; /* Gold text */
+            padding: 15px 30px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease-in-out;
         }
 
-        .submit-button:hover {
-            background-color: #008C73;
-        }
+        .large-submit-button {
+    background-color: #00594C;
+    color: #FFF;
+    padding: 15px 30px; /* You can adjust the padding to make it larger or smaller */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+.large-submit-button:hover {
+    background-color: #008C73;
+}
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Get Financial Recommendation</h1>
-        <form action="/" method="POST" class="user-form"> <!-- Updated action to "/" -->
-            <label for="user_id">Userz ID:</label>
-            <input type="text" id="user_id" name="user_id" required><br><br>
-            
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required><br><br>
-            
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required><br><br>
-            
-            <label for="income">Income:</label>
-            <input type="number" id="income" name="income" required><br><br>
-            
-            <label for="company_401k">Do you have a company 401(k)?</label>
-            <select id="company_401k" name="company_401k" required>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-            </select><br><br>
-            
-            <label for="company_match">Does your company provide a matching contribution to your 401(k)?</label>
-            <select id="company_match" name="company_match" required>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-            </select><br><br>
-            
-            <label for="match_percent">Percentage of income that the company matches for 401(k):</label>
-            <input type="number" id="match_percent" name="match_percent" step="0.01" required><br><br>
-            
-            <label for="match_salary">Dollar amount of income that the company matches for 401(k):</label>
-            <input type="number" id="match_salary" name="match_salary" step="0.01" required><br><br>
-            
-            <label for="risk_level">Risk Level:</label>
-            <select id="risk_level" name="risk_level" required>
-                <option value="1">Conservative</option>
-                <option value="2">Moderate</option>
-                <option value="3">Aggressive</option>
-            </select><br><br>
-            
-            <label for="inputted_assets">Total Assets:</label>
-            <input type="number" id="inputted_assets" name="inputted_assets" required><br><br>
-            
-            <label for="checking_amt">Amount in Checking Account:</label>
-            <input type="number" id="checking_amt" name="checking_amt" step="0.01" required><br><br>
-            
-            <label for="saving_amt">Amount in Savings Account:</label>
-            <input type="number" id="saving_amt" name="saving_amt" step="0.01" required><br><br>
-            
-            <label for="IRA_amt">Amount in IRA Account:</label>
-            <input type="number" id="IRA_amt" name="IRA_amt" step="0.01" required><br><br>
-            
-            <label for="comp401k_amt">Amount in 401(k) Account:</label>
-            <input type="number" id="comp401k_amt" name="comp401k_amt" step="0.01" required><br><br>
-            
-            <label for="investment_amt">Amount in Investment Account:</label>
-            <input type="number" id="investment_amt" name="investment_amt" step="0.01" required><br><br>
-            
-            <label for="financial_goal">Financial Goal:</label>
-            <input type="text" id="financial_goal" name="financial_goal" required><br><br>
-            
-            <input type="submit" value="Get Financial Recommendation" class="submit-button">
-        </form>
-    </div>
-</body>
-</html>
+        <h1>Financial Health Questionnaire</h1>
+        <form action="/submit" method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="age-range">Age Range:</label>
+            <select id="age-range" name="age-range" required>
+                <option value="under18">Under 18</option>
+                <option value="18-30">18-30</option>
+                <option value="31-45">31-45</option>
+                <option value="46-60">46-60</option>
+                <option value="over60">Over 60</option>
+            </select>
+
+            <label for="income-range">Income Range:</label>
+            <select id="income-range" name="income-range" required>
+                <option value="less20k">Less than $20,000</option>
+                <option value="20k-40k">$20,000 - $40,000</option>
+                <option value="40k-60k">$40,000 - $60,000</option>
+                <option value="60k-100k">$60,000 - $100,000</option>
+                <option value="over100k">Over $100,000</option>
+            </select>
+
+            <label for="assets-range">Assets Range:</label>
+            <select id="assets-range" name="assets-range" required>
+                <option value="lessthan1k">Less than $1,000</option>
+                <option value="1k-10k">$1,000 - $10,000</option>
+                <option value="10k-50k">$10,000 - $50,000</option>
+                <option value="50k-100k">$50,000 - $100,000</option>
+                <option value="over100k">Over $100,000</option>
+            </select>
+
+            <label for="debt-range">Debt Range:</label>
+            <select id="debt-range" name="debt-range" required>
+                <option value="no-debt">No Debt</option>
+                <option value="1k-10k">$1,000 - $10,000</option>
+                <option value="10k-50k">$10,000 - $50,000</option>
+                <option value="50k-100k">$50,000 - $100,000</option>
+                <option value="over100k">Over $100,000</option>
+            </select>
+
+            <label for="expenses-range">Monthly Expenses Range:</label>
+            <select id="expenses-range" name="expenses-range" required>
+                <option value="lessthan1k">Less than $1,000</option>
+                <option value="1k-2k">$1,000 - $2,000</option>
+                <option value="2k-4k">$2,000 - $4,000</option>
+                <option value="4k-6k">$4,000 - $6,000</option>
+                <option value="over6k">Over $6,000</option>
+            </select>
+
+            <label for="savings-range">Savings Range:</label>
+            <select id="savings-range" name="savings-range" required>
+                <option value="no-savings">No Savings</option>
+                <option value="1k-10k">$1,000 - $10,000</option>
+                <option value="10k-50k">$10,000 - $50,000</option>
+                <option value="50k-100k">$50,000 - $100,000</option>
+                <option value="over100k">Over $100,000</option>
+            </select>
+
+            <label for="risk-level">Risk Level:</label>
+<select id="risk-level" name="risk-level" required>
+    <option value="low">Low</option>
+    <option value="moderate">Moderate</option>
+    <option value="high">High</option>
+</select>
+
+<label for="long-term-goals">Long Term Financial Goals:</label>
+<input type="text" id="long-term-goals" name="long-term-goals" required>
+
+
+
+<input type="submit" value="Get Recomendation" class="large-submit-button">
