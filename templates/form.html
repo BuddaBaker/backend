@@ -1,35 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Financial Health Questionnaire</title>
     <style>
+        
+        $green: #008000;
+        $gold: #FFD700;
+        $white: #FFF;
+
         body {
-    font-family: Arial, sans-serif;
-    background-color: #003300; /* Very Dark Green background */
-}
+            font-family: Arial, sans-serif;
+            background-color: $green; /* Very Dark Green background */
+        }
 
         .container {
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #F5F5F5;
+            background-color: $white;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
-            color: #008000; /* Green title text */
+            color: $green; /* Green title text */
             text-align: center;
         }
 
         label {
             display: block;
             margin-top: 15px;
-            color: #008000; /* Green label text */
+            color: $green; /* Green label text */
             font-weight: bold;
         }
 
         input[type="text"],
+        input[type="number"],
         select {
             width: 100%;
             padding: 10px;
@@ -38,21 +46,9 @@
             border-radius: 5px;
         }
 
-        .radio-group {
-            display: flex;
-        }
-
-        .radio-option {
-            margin-right: 20px;
-        }
-
-        .checkbox-group {
-            margin-top: 5px;
-        }
-
-        .submit-button {
-            background-color: #FFF; /* White background */
-            color: #FFD700; /* Gold text */
+        .large-submit-button {
+            background-color: $green;
+            color: $white;
             padding: 15px 30px;
             border: none;
             border-radius: 5px;
@@ -60,91 +56,224 @@
             transition: background-color 0.3s ease-in-out;
         }
 
-        .large-submit-button {
-    background-color: #00594C;
-    color: #FFF;
-    padding: 15px 30px; /* You can adjust the padding to make it larger or smaller */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-}
-.large-submit-button:hover {
-    background-color: #008C73;
-}
+        .large-submit-button:hover {
+            background-color: $gold;
+        }
     </style>
 </head>
 <body>
+
+
     <div class="container">
         <h1>Financial Health Questionnaire</h1>
-        <form action="/submit" method="POST">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
 
-            <label for="age-range">Age Range:</label>
-            <select id="age-range" name="age-range" required>
-                <option value="under18">Under 18</option>
-                <option value="18-30">18-30</option>
-                <option value="31-45">31-45</option>
-                <option value="46-60">46-60</option>
-                <option value="over60">Over 60</option>
+        <!-- Personal Information Section -->
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="age">Age:</label>
+        <select id="age" name="age" required>
+            <option value="under18">Under 18</option>
+            <option value="18-30">18-30</option>
+            <option value="31-45">31-45</option>
+            <option value="46-60">46-60</option>
+            <option value="over60">Over 60</option>
+        </select>
+
+        <label for="life-status">Life Status:</label>
+        <select id="life-status" name="life-status" required>
+            <option value="single">Single</option>
+            <option value="married">Married</option>
+            <option value="divorced">Divorced</option>
+            <option value="widowed">Widowed</option>
+        </select>
+
+        <!-- Add similar dropdowns for Children, Education Level, and Health Conditions -->
+
+        
+        <!-- Asset Summary Section -->
+        <label for="401k">401k:</label>
+        <select id="401k" name="401k" required>
+            <option value="none">None</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
+
+        <label for="insurance">Insurance from company?</label>
+        <select id="insurance" name="insurance" required>
+            <option value="none">None</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
+
+        <label for="debts-under-8">Debts (Under 8%) interest:</label>
+        <select id="debts-under-8" name="debts-under-8" required>
+            <option value="none">None</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
+
+        <label for="debts-above-8">Debts (Above 8%) interest:</label>
+        <select id="debts-above-8" name="debts-above-8" required>
+            <option value="none">None</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
+
+        <label for="savings">Savings:</label>
+        <select id="savings" name="savings" required>
+            <option value="none">None</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
+
+        <label for="home-market-value">Home and Market Value:</label>
+        <select id="home-market-value" name="home-market-value" required>
+            <option value="none">None</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
+
+        <label for="own-stocks">Own any Stocks, and Value?</label>
+        <select id="own-stocks" name="own-stocks" required>
+            <option value="none">None</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
+
+
+        <!-- Cash Flow Section -->
+            <label for="salary">Salary:</label>
+            <select id="salary" name="salary" required>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+                <option value="very-high">Very High</option>
             </select>
 
-            <label for="income-range">Income Range:</label>
-            <select id="income-range" name="income-range" required>
-                <option value="less20k">Less than $20,000</option>
-                <option value="20k-40k">$20,000 - $40,000</option>
-                <option value="40k-60k">$40,000 - $60,000</option>
-                <option value="60k-100k">$60,000 - $100,000</option>
-                <option value="over100k">Over $100,000</option>
+            <label for="bonus">Bonus:</label>
+            <select id="bonus" name="bonus" required>
+                <option value="none">None</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
             </select>
 
-            <label for="assets-range">Assets Range:</label>
-            <select id="assets-range" name="assets-range" required>
-                <option value="lessthan1k">Less than $1,000</option>
-                <option value="1k-10k">$1,000 - $10,000</option>
-                <option value="10k-50k">$10,000 - $50,000</option>
-                <option value="50k-100k">$50,000 - $100,000</option>
-                <option value="over100k">Over $100,000</option>
+            <label for="other-income">Other Income:</label>
+            <select id="other-income" name="other-income" required>
+                <option value="none">None</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
             </select>
 
-            <label for="debt-range">Debt Range:</label>
-            <select id="debt-range" name="debt-range" required>
-                <option value="no-debt">No Debt</option>
-                <option value="1k-10k">$1,000 - $10,000</option>
-                <option value="10k-50k">$10,000 - $50,000</option>
-                <option value="50k-100k">$50,000 - $100,000</option>
-                <option value="over100k">Over $100,000</option>
+            <label for="monthly-expenses">Monthly Expenses:</label>
+            <select id="monthly-expenses" name="monthly-expenses" required>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+                <option value="very-high">Very High</option>
             </select>
 
-            <label for="expenses-range">Monthly Expenses Range:</label>
-            <select id="expenses-range" name="expenses-range" required>
-                <option value="lessthan1k">Less than $1,000</option>
-                <option value="1k-2k">$1,000 - $2,000</option>
-                <option value="2k-4k">$2,000 - $4,000</option>
-                <option value="4k-6k">$4,000 - $6,000</option>
-                <option value="over6k">Over $6,000</option>
-            </select>
+<!-- Future Plans Section -->
+<label for="goal">Goal:</label>
+<input type="text" id="goal" name="goal" required>
 
-            <label for="savings-range">Savings Range:</label>
-            <select id="savings-range" name="savings-range" required>
-                <option value="no-savings">No Savings</option>
-                <option value="1k-10k">$1,000 - $10,000</option>
-                <option value="10k-50k">$10,000 - $50,000</option>
-                <option value="50k-100k">$50,000 - $100,000</option>
-                <option value="over100k">Over $100,000</option>
-            </select>
+<label for="years-to-goal">How many years till you can achieve that goal:</label>
+<select id="years-to-goal" name="years-to-goal" required>
+    <option value="less-than-3">Less than 3 years</option>
+    <option value="3-5">3-5 years</option>
+    <option value="6-10">6-10 years</option>
+    <option value="more-than-10">More than 10 years</option>
+</select>
 
-            <label for="risk-level">Risk Level:</label>
-<select id="risk-level" name="risk-level" required>
+<!-- Add similar dropdowns for Bonus, Other Income, Monthly Expenses -->
+<label for="bonus">Bonus:</label>
+<select id="bonus" name="bonus" required>
+    <option value="none">None</option>
     <option value="low">Low</option>
-    <option value="moderate">Moderate</option>
+    <option value="medium">Medium</option>
     <option value="high">High</option>
 </select>
 
-<label for="long-term-goals">Long Term Financial Goals:</label>
-<input type="text" id="long-term-goals" name="long-term-goals" required>
+<label for="other-income">Other Income:</label>
+<select id="other-income" name="other-income" required>
+    <option value="none">None</option>
+    <option value="low">Low</option>
+    <option value="medium">Medium</option>
+    <option value="high">High</option>
+</select>
+
+<label for="monthly-expenses">Monthly Expenses:</label>
+<select id="monthly-expenses" name="monthly-expenses" required>
+    <option value="low">Low</option>
+    <option value="medium">Medium</option>
+    <option value="high">High</option>
+    <option value="very-high">Very High</option>
+</select>
 
 
+        <!-- Future Plans Section -->
+        <label for="goal">Goal:</label>
+        <input type="text" id="goal" name="goal" required>
 
-<input type="submit" value="Get Recomendation" class="large-submit-button">
+        <label for="years-to-goal">How many years till you can achieve that goal:</label>
+        <select id="years-to-goal" name="years-to-goal" required>
+            <option value="less-than-3">Less than 3 years</option>
+            <option value="3-5">3-5 years</option>
+            <option value="6-10">6-10 years</option>
+            <option value="more-than-10">More than 10 years</option>
+        </select>
+
+        <!-- Add a submit button -->
+        <input type="button" value="Get Recommendation" class="large-submit-button" onclick="getRecommendation()">
+    </div>
+
+    <script>
+        function getRecommendation() {
+            // Fetch the values from the form and send them to the server
+            const name = document.getElementById("name").value;
+            const age = document.getElementById("age").value;
+            const lifeStatus = document.getElementById("life-status").value;
+            // Add similar lines for other fields
+
+            const goal = document.getElementById("goal").value;
+            const yearsToGoal = document.getElementById("years-to-goal").value;
+
+            // Construct the data object to send to the server
+            const data = {
+                name: name,
+                age: age,
+                lifeStatus: lifeStatus,
+                // Add similar lines for other fields
+                goal: goal,
+                yearsToGoal: yearsToGoal
+            };
+
+            // Send the data to the server using fetch or XMLHttpRequest
+            fetch('/get_recommendation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response from the server
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,74 +1,105 @@
-from flask import Flask, render_template, request
+class FinancialPlanner:
+    def __init__(self, age, salary, savings, debts, expenses, goals, time_to_goal):
+        self.age = age
+        self.salary = salary
+        self.savings = savings
+        self.debts = debts
+        self.expenses = expenses
+        self.goals = goals
+        self.time_to_goal = time_to_goal
+        self.aggressiveness = 0  # Placeholder, will be calculated
 
-capp = Flask(__name__)
+    def calculate_aggressiveness(self):
+        # Rule 1: As age increases, aggressiveness decreases
+        self.aggressiveness += max(0, 50 - self.age)  # Assuming a linear decrease in aggressiveness with age
 
-# Define a dictionary to store recommendations for each goal and risk tolerance
-goal_recommendations = {
-    'Retirement Planning': {
-        'Conservative': 'Start investing in retirement accounts with low-risk assets like bonds to build a solid retirement fund.',
-        'Moderate': 'Diversify your retirement investments across various assets for balanced growth.',
-        'Aggressive': 'Consider high-growth investments like stocks and ETFs to maximize long-term returns.'
-    },
-    'Emergency Fund': {
-        'Conservative': 'Save money in a stable, low-risk savings account for your emergency fund.',
-        'Moderate': 'Create a mix of stable savings and moderate-risk investments for your emergency fund.',
-        'Aggressive': 'Consider moderate-risk investments with quick liquidity for your emergency fund.'
-    },
-    'Wealth Building': {
-        'Conservative': 'Invest in a diversified portfolio with low to moderate risk to steadily build wealth.',
-        'Moderate': 'Create a balanced portfolio of diverse assets to grow your wealth over time.',
-        'Aggressive': 'Consider high-risk, high-reward investments to accelerate wealth building.'
-    },
-    'Investing': {
-        'Conservative': 'Focus on stable, low-risk assets like bonds and dividend stocks for your investment portfolio.',
-        'Moderate': 'Diversify your investment portfolio across different assets for balanced growth.',
-        'Aggressive': 'Consider high-growth, high-volatility assets like growth stocks and technology companies.'
-    },
-    'Home Buying': {
-        'Conservative': 'Save money for a down payment in low-risk accounts like a high-yield savings account or CDs.',
-        'Moderate': 'Create a balanced saving and investing plan to grow your down payment fund.',
-        'Aggressive': 'Consider moderate-risk investments to potentially grow your down payment fund faster.'
-    }
-}
+        # Rule 2: Long-term goals are less aggressive, short-term goals are more aggressive
+        if "Home Buying" in self.goals:
+            self.aggressiveness += 20 if self.time_to_goal < 5 else 10  # Adjust values based on your criteria
+        elif "Education Fund" in self.goals:
+            self.aggressiveness += 10 if self.time_to_goal > 10 else 5  # Adjust values based on your criteria
 
-@app.route('/', methods=['GET', 'POST'])
+        # Rule 3: More time to achieve the goal means less aggressiveness
+        self.aggressiveness += max(0, 15 - self.time_to_goal)  # Assuming a linear decrease in aggressiveness with time
+
+        # Rule 4: If time left < 3 years, max out aggressiveness
+        if self.time_to_goal < 3:
+            self.aggressiveness = 100
+
+        # Rule 5: If time left < 15 years, minimum aggressiveness
+        elif self.time_to_goal < 15:
+            self.aggressiveness = 10
+
+        # Rule 6: More savings, less aggressiveness
+        self.aggressiveness += max(0, 10 - (self.savings / 10000))  # Assuming a linear decrease in aggressiveness with savings
+
+        # Rule 7: If debt and goal isn't debt payoff, give a warning
+        if self.debts > 0 and "Debt Reduction" not in self.goals:
+            print("Warning: You have debts, but your goal doesn't include debt reduction.")
+
+        # Rule 8: If debt and goal is debt payoff, calculate monthly debt payment based on salary
+        if self.debts > 0 and "Debt Reduction" in self.goals:
+            monthly_debt_payment = self.salary * 0.2  # Placeholder formula, adjust based on your criteria
+            print(f"Monthly Debt Payment: {monthly_debt_payment}")
+
+        # Rule 9: If expenses are the same as salary, give a warning to reduce spending
+        if self.expenses == self.salary:
+            print("Warning: Your expenses are equal to your salary. Consider reducing spending.")
+
+        # Additional rules can be added based on your specific criteria
+
+        return self.aggressiveness
+
+
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+class FinancialPlanner:
+    def __init__(self, age, salary, savings, debts, expenses, goals, time_to_goal):
+        self.age = age
+        self.salary = salary
+        self.savings = savings
+        self.debts = debts
+        self.expenses = expenses
+        self.goals = goals
+        self.time_to_goal = time_to_goal
+        self.aggressiveness = 0  # Placeholder, will be calculated
+
+    def calculate_aggressiveness(self):
+        # Your existing logic for calculating aggressiveness
+        # ...
+
+        return self.aggressiveness
+
+    def get_recommendation(self):
+        # Sample recommendation logic for debugging
+        print("Received data:", vars(self))  # Print received data for debugging
+
+        # Return a specific response for testing
+        return "This is a test response. Check the server logs for received data."
+
+@app.route('/get_recommendation', methods=['POST'])
 def get_recommendation():
-    if request.method == 'POST':
-        user_id = int(request.form['user_id'])
-        email = request.form['email']
-        password = request.form['password']
-        income = float(request.form['income'])
-        company_401k = request.form['company_401k']
-        company_match = request.form['company_match']
-        match_percent = float(request.form['match_percent'])
-        match_salary = float(request.form['match_salary'])
-        risk_level = int(request.form['risk_level'])
-        inputted_assets = float(request.form['inputted_assets'])
-        checking_amt = float(request.form['checking_amt'])
-        saving_amt = float(request.form['saving_amt'])
-        IRA_amt = float(request.form['IRA_amt'])
-        comp401k_amt = float(request.form['comp401k_amt'])
-        investment_amt = float(request.form['investment_amt'])
-        financial_goal = request.form['financial_goal']
-        
-        # Map risk level to risk tolerance
-        risk_tolerances = {
-            1: 'Conservative',
-            2: 'Moderate',
-            3: 'Aggressive'
-        }
-        risk_tolerance = risk_tolerances.get(risk_level, 'Moderate')  # Default to 'Moderate' if invalid input
+    data = request.get_json()
 
-        # Use the financial goal and risk tolerance to get the financial recommendation
-        if financial_goal in goal_recommendations and risk_tolerance in goal_recommendations[financial_goal]:
-            recommendation = goal_recommendations[financial_goal][risk_tolerance]
-        elif financial_goal in goal_recommendations:
-            recommendation = "No specific risk tolerance provided for this goal. Consider a moderate risk tolerance."
-        else:
-            recommendation = "No specific recommendation available for this goal."
-        
-        return render_template('result.html', recommendation=recommendation)
-    return render_template('form.html')
+    # Extract relevant data from the request
+    age = int(data.get('age', 0))
+    salary = float(data.get('salary', 0))
+    savings = float(data.get('savings', 0))
+    debts = float(data.get('debts', 0))
+    expenses = float(data.get('expenses', 0))
+    goals = data.get('goals', [])
+    time_to_goal = int(data.get('timeToGoal', 0))
+
+    # Use FinancialPlanner class to calculate aggressiveness
+    planner = FinancialPlanner(age, salary, savings, debts, expenses, goals, time_to_goal)
+    planner.calculate_aggressiveness()
+
+    # Get recommendation based on aggressiveness and specific goal
+    recommendation = planner.get_recommendation()
+
+    return jsonify({'aggressiveness': planner.aggressiveness, 'recommendation': recommendation})
 
 if __name__ == '__main__':
-    capp.run()
+    app.run(debug=True)
