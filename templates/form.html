@@ -1,43 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
+DOCTYPE html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Financial Health Questionnaire</title>
     <style>
-        
-        $green: #008000;
-        $gold: #FFD700;
-        $white: #FFF;
-
         body {
             font-family: Arial, sans-serif;
-            background-color: $green; /* Very Dark Green background */
+            background-color: #003300; /* Very Dark Green background */
         }
 
         .container {
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
-            background-color: $white;
+            background-color: #F5F5F5;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
-            color: $green; /* Green title text */
+            color: #008000; /* Green title text */
             text-align: center;
         }
 
         label {
             display: block;
             margin-top: 15px;
-            color: $green; /* Green label text */
+            color: #008000; /* Green label text */
             font-weight: bold;
         }
 
         input[type="text"],
-        input[type="number"],
         select {
             width: 100%;
             padding: 10px;
@@ -46,9 +38,21 @@
             border-radius: 5px;
         }
 
-        .large-submit-button {
-            background-color: $green;
-            color: $white;
+        .radio-group {
+            display: flex;
+        }
+
+        .radio-option {
+            margin-right: 20px;
+        }
+
+        .checkbox-group {
+            margin-top: 5px;
+        }
+
+        .submit-button {
+            background-color: #FFF; /* White background */
+            color: #FFD700; /* Gold text */
             padding: 15px 30px;
             border: none;
             border-radius: 5px;
@@ -56,12 +60,20 @@
             transition: background-color 0.3s ease-in-out;
         }
 
+        .large-submit-button {
+            background-color: #00594C;
+            color: #FFF;
+            padding: 15px 30px; /* You can adjust the padding to make it larger or smaller */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
         .large-submit-button:hover {
-            background-color: $gold;
+            background-color: #008C73;
         }
     </style>
-</head>
-<body>
 
 
     <div class="container">
@@ -182,49 +194,15 @@
                 <option value="very-high">Very High</option>
             </select>
 
-<!-- Future Plans Section -->
-<label for="goal">Goal:</label>
-<input type="text" id="goal" name="goal" required>
 
-<label for="years-to-goal">How many years till you can achieve that goal:</label>
-<select id="years-to-goal" name="years-to-goal" required>
-    <option value="less-than-3">Less than 3 years</option>
-    <option value="3-5">3-5 years</option>
-    <option value="6-10">6-10 years</option>
-    <option value="more-than-10">More than 10 years</option>
-</select>
 
-<!-- Add similar dropdowns for Bonus, Other Income, Monthly Expenses -->
-<label for="bonus">Bonus:</label>
-<select id="bonus" name="bonus" required>
-    <option value="none">None</option>
-    <option value="low">Low</option>
-    <option value="medium">Medium</option>
-    <option value="high">High</option>
-</select>
-
-<label for="other-income">Other Income:</label>
-<select id="other-income" name="other-income" required>
-    <option value="none">None</option>
-    <option value="low">Low</option>
-    <option value="medium">Medium</option>
-    <option value="high">High</option>
-</select>
-
-<label for="monthly-expenses">Monthly Expenses:</label>
-<select id="monthly-expenses" name="monthly-expenses" required>
-    <option value="low">Low</option>
-    <option value="medium">Medium</option>
-    <option value="high">High</option>
-    <option value="very-high">Very High</option>
-</select>
 
 
         <!-- Future Plans Section -->
         <label for="goal">Goal:</label>
         <input type="text" id="goal" name="goal" required>
 
-        <label for="years-to-goal">How many years till you can achieve that goal:</label>
+        <label for="years-to-goal">How many years till you want to achieve this goal:</label>
         <select id="years-to-goal" name="years-to-goal" required>
             <option value="less-than-3">Less than 3 years</option>
             <option value="3-5">3-5 years</option>
